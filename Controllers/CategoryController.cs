@@ -21,7 +21,7 @@ namespace Shop.Controllers
             // AsNoTracking -> recupera a categoria de modo mais rápido possível (Só leitura). 
             //ToListAsync - Executa a consulta no banco de dados de fato. 
             var categories = await context.Categories.AsNoTracking().ToListAsync();
-            return Ok(categories);
+            return categories;
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace Shop.Controllers
         public async Task<ActionResult<Category>> GetById(int id, [FromServices] DataContext context)
         {
             var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            return Ok(category);
+            return category;
         }
 
         [HttpPost]
