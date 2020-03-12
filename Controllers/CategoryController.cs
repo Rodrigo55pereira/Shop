@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -16,6 +17,7 @@ namespace Shop.Controllers
     {
         [HttpGet]
         [Route("")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Category>>> Get([FromServices]DataContext context)
         {
             // AsNoTracking -> recupera a categoria de modo mais rápido possível (Só leitura). 
@@ -26,6 +28,7 @@ namespace Shop.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Category>> GetById(int id, [FromServices] DataContext context)
         {
             var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -34,6 +37,7 @@ namespace Shop.Controllers
 
         [HttpPost]
         [Route("")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Category>> Post([FromBody]Category model, 
             [FromServices]DataContext context)
         {
@@ -53,6 +57,7 @@ namespace Shop.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Category>> Put(int id, [FromBody]Category model, 
             [FromServices]DataContext context)
         {
@@ -83,6 +88,7 @@ namespace Shop.Controllers
         
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Category>> Delete(int id, 
             [FromServices]DataContext context)
         {
