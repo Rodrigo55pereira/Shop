@@ -36,13 +36,14 @@ namespace Shop
             //services.AddResponseCaching();
 
             // Uso de banco em memória com o nome Database
-            //services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            /*
             services.AddDbContext<DataContext>(
                 opt => opt.UseSqlServer(
                     Configuration.GetConnectionString("connectionString")
                     )
                 );
-
+            */
             services.AddControllers();
 
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
@@ -64,7 +65,7 @@ namespace Shop
             });
 
             // Abre conexão com o banco de dado, garante um DataContext por requisição.
-            services.AddScoped<DataContext, DataContext>();
+            //services.AddScoped<DataContext, DataContext>();
 
             services.AddSwaggerGen(c =>
             {
