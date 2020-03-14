@@ -10,14 +10,16 @@ namespace Shop.Controllers
 {
 
     // Endpoint => url
-    // https://localhost:5001/categories
-    // http://localhost:5000/categories
-    [Route("categories")]
+    // https://localhost:5001/v1/categories
+    // http://localhost:5000/v1/categories
+    [Route("v1/categories")]
     public class CategoryController : ControllerBase
     {
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
+        [ResponseCache(VaryByHeader = "User-Agent", Location = ResponseCacheLocation.Any, Duration = 30)]
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<ActionResult<List<Category>>> Get([FromServices]DataContext context)
         {
             // AsNoTracking -> recupera a categoria de modo mais rápido possível (Só leitura). 
